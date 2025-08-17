@@ -61,23 +61,15 @@ app.get('/data', (req, res) => {
 
   // ✅ مصفوفة الجمل أو المعلومات
   const messages = [
-    "🎯 مرحباً بك! أنت المستخدم المصرّح.",
-    "📦 تم التحقق من جهازك بنجاح.",
-    "🚀 الوصول الكامل متاح الآن.",
-    "🔐 جهازك مطابق للمعلومات المسجلة.",
-    "✅ كل شيء يبدو صحيحاً، استمتع بالبيانات!"
+    "1",
+    "2"
   ];
 
   // ✅ اختيار عشوائي
   const randomMessage = messages[Math.floor(Math.random() * messages.length)];
 
   res.json({
-    message: randomMessage,
-    timestamp: new Date(),
-    data: {
-      name: "Authorized User",
-      accessLevel: "Full"
-    }
+    message: randomMessage
   });
 });
 
