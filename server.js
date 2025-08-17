@@ -51,22 +51,36 @@ app.get('/data', (req, res) => {
   const saved = db.device;
 
   if (
-    saved &&
-    saved.ip === ip &&
-    saved.userAgent === userAgent
+    !db.isRegistered ||
+    !saved ||
+    saved.ip !== ip ||
+    saved.userAgent !== userAgent
   ) {
-    return res.json({
-      message: '🎉 مرحباً! هذه البيانات خاصة بجهازك فقط.',
-      timestamp: new Date(),
-      data: {
-        name: "Authorized User",
-        accessLevel: "Full"
-      }
-    });
-  } else {
     return res.status(403).json({ message: '❌ جهاز غير مصرح له بالدخول' });
   }
+
+  // ✅ مصفوفة الجمل أو المعلومات
+  const messages = [
+    "🎯 مرحباً بك! أنت المستخدم المصرّح.",
+    "📦 تم التحقق من جهازك بنجاح.",
+    "🚀 الوصول الكامل متاح الآن.",
+    "🔐 جهازك مطابق للمعلومات المسجلة.",
+    "✅ كل شيء يبدو صحيحاً، استمتع بالبيانات!"
+  ];
+
+  // ✅ اختيار عشوائي
+  const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+
+  res.json({
+    message: randomMessage,
+    timestamp: new Date(),
+    data: {
+      name: "Authorized User",
+      accessLevel: "Full"
+    }
+  });
 });
+
 
 
 app.listen(port, () => {
