@@ -24,7 +24,7 @@ app.get('/register', (req, res) => {
 
   // إذا الجهاز مسجل مسبقاً، نمنع الدخول
   if (db.isRegistered) {
-    return res.status(403).send('❌ هذا الرابط لم يعد متاحاً');
+    return res.status(403).json({ message: 'err 403: هذا الرابط لم يعد متاحاً' });
   }
 
   // تسجيل بيانات الجهاز
@@ -56,7 +56,7 @@ app.get('/data', (req, res) => {
     saved.ip !== ip ||
     saved.userAgent !== userAgent
   ) {
-    return res.status(403).json({ message: '❌ جهاز غير مصرح له بالدخول' });
+    return res.status(403).json({ message: 'err 403: هذا الرابط لم يعد متاحاً' });
   }
 
   // ✅ مصفوفة الجمل أو المعلومات
