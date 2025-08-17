@@ -11,15 +11,35 @@ app.use(bodyParser.json());
 const dbPath = path.join(__dirname, 'db.json');
 
 // ✅ راوت التسجيل
+
+
 app.get('/register', (req, res) => {
+  // نقرأ الداتا الحالية
+  let db = {};
+  try {
+    db = JSON.parse(fs.readFileSync(dbPath));
+  } catch (err) {
+    db = {};
+  }
+
+  // إذا الجهاز مسجل مسبقاً، نمنع الدخول
+  if (db.isRegistered) {
+    return res.status(403).send('❌ هذا الرابط لم يعد متاحاً');
+  }
+
+  // تسجيل بيانات الجهاز
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
   const userAgent = req.headers['user-agent'];
 
-  const deviceData = { ip, userAgent };
-  fs.writeFileSync(dbPath, JSON.stringify({ device: deviceData }, null, 2));
+  db.device = { ip, userAgent };
+  db.isRegistered = true;
 
-  res.json({ message: '✅ تم تسجيل الجهاز بنجاح، توجه إلى /data' });
+  fs.writeFileSync(dbPath, JSON.stringify(db, null, 2));
+
+  // تحويل مباشر إلى /data
+  res.redirect('/data');
 });
+
 
 
 // ✅ راوت البيانات
