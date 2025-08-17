@@ -1,0 +1,23 @@
+{
+  "name": "device-auth-api",
+  "version": "1.0.0",
+  "description": "API لحماية الوصول حسب الجهاز باستخدام IP و User-Agent فقط",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "express",
+    "device-auth",
+    "ip-verification",
+    "user-agent",
+    "nodejs"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}
